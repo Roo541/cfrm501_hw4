@@ -25,3 +25,4 @@ for j in cov.keys():
 
 print(cov)
 print(annual_cov)
+annual_cov.to_csv('annual_cov.csv')
