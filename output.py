@@ -1,10 +1,11 @@
 import pandas as pd
 import numpy as np
 from bokeh.plotting import figure, show
+from bokeh.layouts import row
 import time
 
 cov_matrix = pd.read_csv('annual_cov.csv')
-mu_vector = pd.read_csv('sample_mean_daily_vector.csv')
+mu_vector = pd.read_csv('mu_annual.csv')
 mu_vector = mu_vector.drop(columns=['Unnamed: 0'])
 #holder for weights once solved
 asset_weights = mu_vector.keys()
@@ -81,12 +82,17 @@ for i in mu_p:
     value = np.sqrt(value)
     sigma_p.append(value)
 
-p1 = figure(plot_height = 800, plot_width = 1000, 
+p1 = figure(plot_height = 600, plot_width = 800, 
+        title = 'Mean Variance Frontier Curve',
+        x_axis_label = 'sigma_p', 
+        y_axis_label = 'mu_p')
+p2 = figure(plot_height = 600, plot_width = 800, 
         title = 'Mean Variance Frontier Curve',
         x_axis_label = 'sigma_p', 
         y_axis_label = 'mu_p')
 
-p1.line(sigma_p, mu_p, line_width=2, color='blue', legend_label='sigma-r graph')
+p1.line(sigma_p, mu_p, line_width=2, color='blue', legend_label='r-sigma graph')
+p2.line(sigma_p, mu_p, line_width=2, color='blue', legend_label='r-sigma graph')
 
-#show(p1)
+show(row(p1, p2))
 

@@ -53,7 +53,7 @@ for j in range(len(ticker)):
 
 cov_matrix = pd.DataFrame.from_dict(cov_matrix)
 
-print(sample_mean_daily)
+print(sample_mean_daily.transpose())
 print(cov_matrix)
 # returns.to_csv('daily_arithmetic_returns.csv')
 # sample_mean_daily.to_csv('sample_mean_daily_vector.csv')
