@@ -94,5 +94,35 @@ p2 = figure(plot_height = 600, plot_width = 800,
 p1.line(sigma_p, mu_p, line_width=2, color='blue', legend_label='r-sigma graph')
 p2.line(sigma_p, mu_p, line_width=2, color='blue', legend_label='r-sigma graph')
 
-show(row(p1, p2))
+#show(row(p1, p2))
+
+#for investor desired return of 0.25 calculate the std dev and weights
+investor_std_dev = np.sqrt(var_minima + ((0.25 - mu_minima)**2)/(psi*var_minima))
+print('std dev for expected portfolio return of 0.25:', investor_std_dev)
+
+#calculate weights
+lambda_1 = (B[0]*0.25 - C[0])/psi
+lambda_2 = (B[0]-A[0]*0.25)/psi
+
+part_1_w = sigma_inverse.dot(unit_vector)
+part_1_w = part_1_w*(-lambda_1)
+
+part_2_w = sigma_inverse.dot(mu_vector)
+part_2_w = part_2_w*(-lambda_2)
+
+weights_solution = part_1_w + part_2_w
+solution_weights = {'ticker':asset_weights['ticker'][:], 'weight':[]}
+for i in weights_solution:
+    solution_weights['weight'].append(i[0])
+
+solution_weights = pd.DataFrame.from_dict(solution_weights)
+print('solution of weights for return of 0.25:')
+print(solution_weights)
+summation = 0.00
+for i in solution_weights['weight']:
+    summation += i
+print('summation of weights:', summation)
+
+#now investor wants to achieve std dev of 0.23, what is the best return available at this value?
+print('psi is:', psi)
 
